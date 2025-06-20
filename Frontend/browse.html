@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Properties - HostelFinder</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="browse.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1>HostelFinder</h1>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="browse.html" class="nav-link active">Browse</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#help" class="nav-link">Help</a>
+                <div class="nav-auth">
+                    <button class="btn-secondary" onclick="showAuthModal('login')"><a href="loginform.html">Sign In</a></button>
+                    <button class="btn-primary" onclick="showAuthModal('register')"><a href="registration.html">Sign Up</a></button>
+                </div>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <section class="browse-properties" id="properties">
+        <div class="container">
+            <div class="section-header">
+                <h2>Available Properties</h2>
+                <p>Find the perfect student housing that fits your needs.</p>
+            </div>
+            
+            <div class="search-and-filters">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search by location, university, or property name...">
+                    <button class="btn-primary"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="filters">
+                    <button class="btn-outline" onclick="toggleFilters()">
+                        <i class="fas fa-filter"></i> Filters
+                    </button>
+                </div>
+            </div>
+
+            <div class="filters-sidebar" id="filtersSidebar">
+              <h3>Refine Search</h3>
+              
+              <div class="filter-group">
+                  <label>Price Range</label>
+                  <div class="price-inputs">
+                      <input type="number" placeholder="Min" id="minPrice">
+                      <span>to</span>
+                      <input type="number" placeholder="Max" id="maxPrice">
+                  </div>
+              </div>
+              
+              <div class="filter-group">
+                  <label>Property Type</label>
+                  <div class="checkbox-group">
+                      <label class="checkbox-item">
+                          <input type="checkbox" value="dormitory">
+                          <span>Dormitory</span>
+                      </label>
+                      <label class="checkbox-item">
+                          <input type="checkbox" value="apartment">
+                          <span>Apartment</span>
+                      </label>
+                      <label class="checkbox-item">
+                          <input type="checkbox" value="house">
+                          <span>House</span>
+                      </label>
+                      <label class="checkbox-item">
+                          <input type="checkbox" value="studio">
+                          <span>Studio</span>
+                      </label>
+                  </div>
+              </div>
+              
+              <div class="filter-group">
+                  <label>Amenities</label>
+                  <div class="checkbox-group">
+                      <label class="checkbox-item">
+                          <input type="checkbox" value="wifi">
+                          <span>WiFi Included</span>
+                      </label>
+                      <label class="checkbox-item">
+                          <input type="checkbox" value="laundry">
+                          <span>Laundry</span>
+                      </label>
+                      <label class="checkbox-item">
+                          <input type="checkbox" value="parking">
+                          <span>Parking</span>
+                      </label>
+                      <label class="checkbox-item">
+                          <input type="checkbox" value="furnished">
+                          <span>Furnished</span>
+                      </label>
+                      <label class="checkbox-item">
+                          <input type="checkbox" value="gym">
+                          <span>Gym</span>
+                      </label>
+                      <label class="checkbox-item">
+                          <input type="checkbox" value="pool">
+                          <span>Pool</span>
+                      </label>
+                  </div>
+              </div>
+              
+              <div class="filter-actions">
+                  <button class="btn-primary" onclick="applyFilters()">Apply Filters</button>
+                  <button class="btn-outline" onclick="clearFilters()">Clear All</button>
+              </div>
+          </div>
+
+            <div class="properties-grid" id="propertiesGrid">
+                <div class="property-card">
+                    <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60" alt="Modern Apartment">
+                    <div class="property-card-content">
+                        <h3>Modern Apartment near Campus</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i> 123 University Lane, City Center</p>
+                        <div class="property-features">
+                            <span><i class="fas fa-bed"></i> 2 Bedrooms</span>
+                            <span><i class="fas fa-bath"></i> 1 Bathroom</span>
+                        </div>
+                        <div class="property-price">
+                            <p>$850/month</p>
+                            <a href="#" class="btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60" alt="Cozy Studio">
+                    <div class="property-card-content">
+                        <h3>Cozy Studio with Great Views</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i> 456 College Avenue, Downtown</p>
+                        <div class="property-features">
+                            <span><i class="fas fa-bed"></i> Studio</span>
+                            <span><i class="fas fa-bath"></i> 1 Bathroom</span>
+                        </div>
+                        <div class="property-price">
+                            <p>$600/month</p>
+                            <a href="#" class="btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60" alt="Shared House">
+                    <div class="property-card-content">
+                        <h3>Spacious Shared House</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i> 789 Learning Street, Suburbia</p>
+                        <div class="property-features">
+                            <span><i class="fas fa-bed"></i> 4 Bedrooms</span>
+                            <span><i class="fas fa-bath"></i> 2 Bathrooms</span>
+                        </div>
+                        <div class="property-price">
+                            <p>$500/month per room</p>
+                            <a href="#" class="btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+          <div class="footer-grid">
+              <div class="footer-brand">
+                  <h3>HostelFinder</h3>
+                  <p>Making student housing search simple, safe, and stress-free.</p>
+                  <div class="social-links">
+                      <a href="#"><i class="fab fa-facebook"></i></a>
+                      <a href="#"><i class="fab fa-twitter"></i></a>
+                      <a href="#"><i class="fab fa-instagram"></i></a>
+                  </div>
+              </div>
+              
+              <div class="footer-links">
+                  <h4>For Students</h4>
+                  <ul>
+                      <li><a href="#properties">Browse Properties</a></li>
+                      <li><a href="#roommates">Find Roommates</a></li>
+                      <li><a href="#tours">Schedule Tours</a></li>
+                      <li><a href="#resources">Student Resources</a></li>
+                  </ul>
+              </div>
+              
+              <div class="footer-links">
+                  <h4>For Landlords</h4>
+                  <ul>
+                      <li><a href="#list-property">List Property</a></li>
+                      <li><a href="#dashboard">Landlord Dashboard</a></li>
+                      <li><a href="#verification">Verification Process</a></li>
+                      <li><a href="#pricing">Pricing Plans</a></li>
+                  </ul>
+              </div>
+              
+              <div class="footer-links">
+                  <h4>Support</h4>
+                  <ul>
+                      <li><a href="#help">Help Center</a></li>
+                      <li><a href="mailto:support@HostelFinder.com">Contact Us</a></li>
+                      <li><a href="#safety">Safety Guidelines</a></li>
+                      <li><a href="#terms">Terms of Service</a></li>
+                  </ul>
+              </div>
+          </div>
+          
+          <div class="footer-bottom">
+              <p>&copy; 2025 HostelFinder. All rights reserved.</p>
+          </div>
+      </div>
+  </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

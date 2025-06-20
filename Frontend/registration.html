@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="registration.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="index.css">
+ 
+ </head>
+  <body>
+
+     <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1>HostelFinder</h1>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <a href="browse.html" class="nav-link">Browse</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#help" class="nav-link">Help</a>
+                <div class="nav-auth">
+                    <button class="btn-secondary" onclick="showAuthModal('login')"><a href="loginform.html">Sign In</a></button>
+                    <button class="btn-primary" onclick="showAuthModal('register')"><a href="registration.html">Sign Up</a></button>
+                </div>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+
+
+ </head>
+  <body>z
+
+    <div class="wrapper">
+        <form action="/auth/register" method="POST">
+            <h1>Registration</h1>
+             <div class="inputbox">
+                <div class="input">
+                    <input type="text" placeholder="Full Name" id="fname" name= "fullname" required />
+                    <i class='bx bx-user'></i>
+                </div>
+                <div class="input">
+                    <input type="text" placeholder="Username"  name="username" required />
+                    <i class='bx bx-user'></i>
+                </div>
+             
+             <div class="input">
+                <input type="email" placeholder="Email address" id="email" name="email" required />
+                <i class="fas fa-envelope"></i>
+            </div>
+            <div class="input">
+                <input type="number" placeholder="Phone number" id ="pNumber" name="phoneNumber" required />
+                <i class="fa-solid fa-phone"></i>
+            </div>
+            <div class="input">
+                <input type="password" placeholder="Password" id="password" name="password" required />
+                <i class='bx bx-lock-alt' ></i>
+            </div>
+            <div class="input">
+                <input type="password" placeholder="Confirm Password" required />
+                <i class='bx bx-lock-alt' ></i>
+            </div>
+            
+            <div class="input">
+                <button type="submit">Register</button>
+            </div>
+            <div class="register">
+            <p>
+            Already have an account?<a href="loginform.html">
+              Log In</as>
+            </p>
+             </div>
+        </form>
+    </div>
+
+  </body>
+</html>
