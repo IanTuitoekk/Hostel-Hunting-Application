@@ -19,10 +19,9 @@
                 <a href="browse.html" class="nav-link">Browse</a>
                 <a href="#features" class="nav-link">Features</a>
                 <a href="#help" class="nav-link">Help</a>
-                <div class="nav-auth">
-                    <button class="btn-secondary" onclick="showAuthModal('login')"><a href="loginform.html">Sign In</a></button>
-                    <button class="btn-primary" onclick="showAuthModal('register')"><a href="registration.html">Sign Up</a></button>
-                </div>
+                    <div class="nav-auth" id="authButtons">
+                        
+                    </div>
             </div>
             <div class="nav-toggle" id="navToggle">
                 <i class="fas fa-bars"></i>
@@ -424,6 +423,56 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- <script src="script.js"></script> -->
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    fetch('/api/user')
+      .then(res => res.json())
+      .then(data => {
+          const container = document.getElementById('authButtons');
+          if (data.username) {
+              container.innerHTML = `<span>Welcome, <strong>${data.username}</strong></span>
+                                      <a href="/logout" class="btn-secondary">Logout</a> 
+              `;
+          } else {
+              container.innerHTML = `
+                <button class="btn-secondary"><a href="loginform.html">Sign In</a></button>
+                <button class="btn-primary"><a href="registration.html">Sign Up</a></button>
+              `;
+          }
+        })
+         .catch(err => console.error("Error fetching user info", err));
+      });
+      window.addEventListener("DOMContentLoaded", () => {
+         fetch("/api/hostels")
+        .then(res => res.json())
+        .then(data => {
+            const container = document.getElementById("propertiesGrid");
+            container.innerHTML = ""; // Clear the "Loading..." text
+
+            if (!data.length) {
+                container.innerHTML = "<p>No hostels found.</p>";
+                return;
+            }
+
+            data.forEach(h => {
+                const card = document.createElement("div");
+                card.className = "property-card"; // You can style this in CSS
+                card.innerHTML = `
+                    <h3>${h.title}</h3>
+                    <p><strong>Location:</strong> ${h.location}</p>
+                    <p><strong>Price:</strong> $${h.price}</p>
+                    <p>${h.features}</p>
+                `;
+                container.appendChild(card);
+            });
+        })
+        .catch(err => {
+            console.error("Failed to load hostels:", err);
+            document.getElementById("propertiesGrid").innerHTML = "<p>Error loading hostels.</p>";
+        });
+});
+</script>
+
 </html>

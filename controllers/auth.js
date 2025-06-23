@@ -43,6 +43,13 @@ exports.register = (req, res) => {
     if (!email || !password) {
         return res.status(400).send("Email and password are required");
     }
+    if( !email.includes("@") || !email.includes(".")) {
+        return res.status(400).send("Invalid email format");
+    }if(email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+        req.session.isAdmin = true; // Set session variable to indicate admin accessr
+        req.session.username = "Admin"; // Set session username for admin
+        return res.redirect("/admin.html"); 
+    }
     db.query(
         "SELECT * FROM users WHERE email_address = ?",
         [email],
@@ -62,4 +69,5 @@ exports.register = (req, res) => {
             return res.redirect("/index.html");
         }
     );
+
 }

@@ -171,6 +171,37 @@
                 </div>
         </div>
     </section>
+    <script >
+         window.addEventListener("DOMContentLoaded", () => {
+            fetch("/api/hostels")
+                .then(res => res.json())
+                .then(data => {
+                    const container = document.getElementById("propertiesGrid");
+                    container.innerHTML = ""; // Clear the "Loading..." text
+
+                    if (!data.length) {
+                        container.innerHTML = "<p>No hostels found.</p>";
+                        return;
+                    }
+
+                    data.forEach(h => {
+                        const card = document.createElement("div");
+                        card.className = "property-card"; // You can style this in CSS
+                        card.innerHTML = `
+                            <h3>${h.title}</h3>
+                            <p><strong>Location:</strong> ${h.location}</p>
+                            <p><strong>Price:</strong> $${h.price}</p>
+                            <p>${h.features}</p>
+                        `;
+                        container.appendChild(card);
+                    });
+                })
+                .catch(err => {
+                    console.error("Failed to load hostels:", err);
+                    document.getElementById("propertiesGrid").innerHTML = "<p>Error loading hostels.</p>";
+                });
+            });
+    </script>
 
     <footer class="footer">
       <div class="container">
@@ -222,6 +253,6 @@
       </div>
   </footer>
 
-    <script src="script.js"></script>
+    
 </body>
 </html>
