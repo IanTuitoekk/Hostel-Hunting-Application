@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landlord Dashboard - HostelFinder</title>
+    <meta name="description" content="Manage your properties, bookings, and tenant communications on HostelFinder's landlord dashboard.">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="dashboard-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1>HostelFinder</h1>
+                <span class="dashboard-type">Landlord Dashboard</span>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <a href="#overview" class="nav-link active">Overview</a>
+                <a href="#properties" class="nav-link">Properties</a>
+                <a href="#bookings" class="nav-link">Bookings</a>
+                <a href="#messages" class="nav-link">Messages</a>
+                <a href="#analytics" class="nav-link">Analytics</a>
+                <div class="nav-auth">
+                    <div class="user-profile">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&h=40" alt="Profile" class="profile-avatar">
+                        <span class="profile-name">Ian Tuitoek</span>
+                        <div class="profile-dropdown">
+                            <button class="btn-outline" onclick="logout()">Sign Out</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-container">
+        <!-- Overview Section -->
+        <section class="dashboard-section active" id="overview">
+            <div class="section-header">
+                <h2>Dashboard Overview</h2>
+                <button class="btn-primary" onclick="showAddPropertyModal()">
+                    <i class="fas fa-plus"></i>
+                    Add Property
+                </button>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>8</h3>
+                        <p>Total Properties</p>
+                        <span class="stat-change positive">+2 this month</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>24</h3>
+                        <p>Active Tenants</p>
+                        <span class="stat-change positive">+5 this month</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon yellow">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>$15,200</h3>
+                        <p>Monthly Revenue</p>
+                        <span class="stat-change positive">+12% this month</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon purple">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>96%</h3>
+                        <p>Occupancy Rate</p>
+                        <span class="stat-change positive">+3% this month</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity and Quick Actions -->
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <h3>Recent Activity</h3>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon green">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p><strong>New booking</strong> for University Heights Dorm</p>
+                                <span class="activity-time">2 hours ago</span>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon blue">
+                                <i class="fas fa-message"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p><strong>Message received</strong> from Sarah Chen</p>
+                                <span class="activity-time">4 hours ago</span>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon yellow">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p><strong>Payment received</strong> $750 from Marcus Johnson</p>
+                                <span class="activity-time">1 day ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn-outline view-all-btn">View All Activity</button>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>Upcoming Tasks</h3>
+                    <div class="task-list">
+                        <div class="task-item">
+                            <div class="task-checkbox">
+                                <input type="checkbox" id="task1">
+                                <label for="task1"></label>
+                            </div>
+                            <div class="task-content">
+                                <p>Schedule maintenance for Campus View Apartments</p>
+                                <span class="task-due">Due: Tomorrow</span>
+                            </div>
+                        </div>
+                        
+                        <div class="task-item">
+                            <div class="task-checkbox">
+                                <input type="checkbox" id="task2">
+                                <label for="task2"></label>
+                            </div>
+                            <div class="task-content">
+                                <p>Review lease renewal for Green Valley House</p>
+                                <span class="task-due">Due: 3 days</span>
+                            </div>
+                        </div>
+                        
+                        <div class="task-item">
+                            <div class="task-checkbox">
+                                <input type="checkbox" id="task3">
+                                <label for="task3"></label>
+                            </div>
+                            <div class="task-content">
+                                <p>Update property photos for Sunny Side Studios</p>
+                                <span class="task-due">Due: 1 week</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn-outline view-all-btn">View All Tasks</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Properties Section -->
+        <section class="dashboard-section" id="properties">
+            <div class="section-header">
+                <h2>My Properties</h2>
+                <div class="section-controls">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search properties..." id="propertySearch">
+                    </div>
+                    <button class="btn-primary" onclick="showAddPropertyModal()">
+                        <i class="fas fa-plus"></i>
+                        Add Property
+                    </button>
+                </div>
+            </div>
+
+            <div class="properties-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Occupancy</th>
+                            <th>Monthly Revenue</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="propertiesTableBody">
+                        <!-- Properties will be dynamically inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Bookings Section -->
+        <section class="dashboard-section" id="bookings">
+            <div class="section-header">
+                <h2>Booking Requests</h2>
+                <div class="section-filters">
+                    <select id="bookingFilter">
+                        <option value="all">All Requests</option>
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="bookings-grid" id="bookingsGrid">
+                <!-- Bookings will be dynamically inserted here -->
+            </div>
+        </section>
+
+        <!-- Messages Section -->
+        <section class="dashboard-section" id="messages">
+            <div class="section-header">
+                <h2>Messages</h2>
+                <div class="section-filters">
+                    <select id="messageFilter">
+                        <option value="all">All Messages</option>
+                        <option value="unread">Unread</option>
+                        <option value="read">Read</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="messages-container">
+                <div class="messages-list" id="messagesList">
+                    <!-- Messages will be dynamically inserted here -->
+                </div>
+                <div class="message-detail" id="messageDetail">
+                    <div class="no-message-selected">
+                        <i class="fas fa-envelope"></i>
+                        <p>Select a message to view details</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analytics Section -->
+        <section class="dashboard-section" id="analytics">
+            <div class="section-header">
+                <h2>Analytics & Reports</h2>
+                <div class="section-controls">
+                    <select id="analyticsRange">
+                        <option value="7">Last 7 days</option>
+                        <option value="30">Last 30 days</option>
+                        <option value="90">Last 3 months</option>
+                        <option value="365">Last year</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <h3>Revenue Trend</h3>
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-line"></i>
+                        <p>Revenue chart would be displayed here</p>
+                    </div>
+                </div>
+
+                <div class="analytics-card">
+                    <h3>Occupancy Rate</h3>
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-pie"></i>
+                        <p>Occupancy chart would be displayed here</p>
+                    </div>
+                </div>
+
+                <div class="analytics-card">
+                    <h3>Property Performance</h3>
+                    <div class="performance-list">
+                        <div class="performance-item">
+                            <span class="property-name">University Heights Dorm</span>
+                            <span class="performance-score">98%</span>
+                        </div>
+                        <div class="performance-item">
+                            <span class="property-name">Campus View Apartments</span>
+                            <span class="performance-score">95%</span>
+                        </div>
+                        <div class="performance-item">
+                            <span class="property-name">Green Valley House</span>
+                            <span class="performance-score">92%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Add Property Modal -->
+    <div class="modal" id="addPropertyModal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2>Add New Property</h2>
+                <button class="modal-close" onclick="closeAddPropertyModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addPropertyForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Property Title</label>
+                            <input type="text" placeholder="Enter property title" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Property Type</label>
+                            <select required>
+                                <option value="">Select type</option>
+                                <option value="dormitory">Dormitory</option>
+                                <option value="apartment">Apartment</option>
+                                <option value="house">House</option>
+                                <option value="studio">Studio</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" placeholder="Enter full address" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Monthly Rent ($)</label>
+                            <input type="number" placeholder="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Capacity</label>
+                            <input type="number" placeholder="Number of tenants" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea rows="4" placeholder="Describe your property..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Amenities</label>
+                        <div class="amenities-grid">
+                            <label class="checkbox-item">
+                                <input type="checkbox" value="wifi">
+                                <span>WiFi</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" value="laundry">
+                                <span>Laundry</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" value="parking">
+                                <span>Parking</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" value="furnished">
+                                <span>Furnished</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" value="gym">
+                                <span>Gym</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" value="pool">
+                                <span>Pool</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button type="button" class="btn-outline" onclick="closeAddPropertyModal()">Cancel</button>
+                        <button type="submit" class="btn-primary">Add Property</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="landlord-dashboard.js"></script>
+</body>
+</html>
