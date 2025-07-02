@@ -19,7 +19,7 @@ const db = mysql.createConnection({
 module.exports = db;
 
 // app.use(express.json());
-app.use(express.static("public"));
+app.use(express.static("Frontendc:\Users\alvin\Downloads\hostelfinder.sql"));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
