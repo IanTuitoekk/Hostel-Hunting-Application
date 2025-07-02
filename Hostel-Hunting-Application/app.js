@@ -1,7 +1,7 @@
 const express = require("express");
 const mysql = require("mysql");
 const dotenv = require("dotenv");
-const router = require("express").Router();
+
 
 const path = require("path");
 const session = require("express-session");
@@ -43,14 +43,14 @@ const pagesRouter = require("./routes/pages");
 app.use("/", pagesRouter);
 const authRouter = require("./routes/auth");
 app.use("/auth", authRouter);
-// const adminRouter = require("./routes/admin");
-// app.use("/admin", adminRouter);
+const adminRouter = require("./routes/admin");
+app.use("/admin", adminRouter);
 const apiRouter = require("./routes/api");
 app.use("/api", apiRouter);
 const searchRouter = require("./routes/search");
 app.use("/search", searchRouter);   
 const bookingRouter = require("./models/booking");
-app.use("/booking", bookingRouter);
+app.use("/bookings", bookingRouter);
 
 
 

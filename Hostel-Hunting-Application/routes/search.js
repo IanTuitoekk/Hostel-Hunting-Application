@@ -1,12 +1,23 @@
 const express = require('express');
 const router = express.Router();    
-const db = require('../../app'); // Assuming you have a db module for database operations
+const db = require('../app'); // Assuming you have a db module for database operations
 
 router.get('/search', (req, res) => {
-    const { city, priceRange, amenities } = req.query;
+    const { city, priceRange, amenities, name, location } = req.query;
 
     let query = "SELECT * FROM hostels WHERE 1=1";
     const queryParams = [];
+
+    if (name) {
+        query += " AND LOWER(name) LIKE ?";
+        queryParams.push(`%${name.toLowerCase()}%`);
+    }
+
+    if (location) {
+        // Assuming 'city' and 'address' columns exist for location
+        query += " AND (LOWER(city) LIKE ? OR LOWER(address) LIKE ?)";
+        queryParams.push(`%${location.toLowerCase()}%`, `%${location.toLowerCase()}%`);
+    }
 
     if (city) {
         query += " AND city = ?";

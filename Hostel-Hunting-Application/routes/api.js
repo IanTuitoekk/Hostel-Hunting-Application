@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../../app'); // Assuming you have a db module for database operations
+const db = require('../app'); // Assuming you have a db module for database operations
 
 router.get('/hostels', (req, res) => {
     db.query("SELECT * FROM hostels",(err, hostels) => {

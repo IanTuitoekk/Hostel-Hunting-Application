@@ -1,18 +1,17 @@
 {
-  "name": "package.json",
+  "name": "hostel-hunting-application",
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
     "test": "\"echo \"Error: no test specified\" && exit 1\"",
     "start": "nodemon app.js"
   },
-  "author": "",
+  "author": "undefined",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
-    "dotenv": "^16.5.0",
+    "dotenv": "^16.6.1",
     "express": "^5.1.0",
     "express-session": "^1.18.1",
     "hbs": "^4.2.0",
@@ -22,5 +21,6 @@
   },
   "devDependencies": {
     "@ljharb/tsconfig": "^0.3.2"
-  }
+  },
+  "description": "A web application for hostel hunting and management."
 }
