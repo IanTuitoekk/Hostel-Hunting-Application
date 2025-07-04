@@ -38,6 +38,7 @@ exports.register = (req, res) => {
             
         });
     }
+
     exports.login = (req, res) => {
     const { email, password } = req.body;  
     if (!email || !password) {
@@ -45,11 +46,14 @@ exports.register = (req, res) => {
     }
     if( !email.includes("@") || !email.includes(".")) {
         return res.status(400).send("Invalid email format");
+
     }if(email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
         req.session.isAdmin = true; // Set session variable to indicate admin accessr
         req.session.username = "Admin"; // Set session username for admin
-        return res.redirect("/admin.html"); 
+        return res.redirect("/admin-dashboard.html"); 
     }
+    
+    // Check if user exists
     db.query(
         "SELECT * FROM users WHERE email_address = ?",
         [email],
@@ -66,8 +70,32 @@ exports.register = (req, res) => {
             if (user.password !== password) { 
                 return res.status(401).send("Invalid email or password");
             }
+            req.session.user = {
+                id: user.id,
+                username: user.username,
+                email: user.email_address,
+                phoneNumber: user.phone_number
+            }; 
+            console.log("User logged in successfully:", user); 
+            req.session.username = user.username; // Store username in session
+            
+            if(user.role === "Hostel Owner") {
+        req.session.isLandlord = true; // Set session variable to indicate landlord access
+        req.session.username = "Landlord"; // Set session username for landlord
+        return res.redirect("/landlord-dashboard.html");
+    }
+
             return res.redirect("/index.html");
         }
-    );
-
+    ); 
+    
+exports.logout = (req, res) => {
+        req.session.destroy(err => {    
+            if (err) {
+                console.error("Error during logout:", err);
+                return res.status(500).send("Server error");
+            }
+            res.redirect("/login");
+        });
+    };
 }

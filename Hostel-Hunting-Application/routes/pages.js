@@ -19,7 +19,7 @@ router.get('/admin', (req, res) => {
     if (!req.session.isAdmin) {
                 return res.status(403).send("Access denied");
 
-    }res.sendFile("admin.html", { root: "Frontend" });
+    }res.sendFile("admin-dashboard.html", { root: "Frontend" });
 });
 router.get("/logout", (req, res) => {
     req.session.destroy(err => {

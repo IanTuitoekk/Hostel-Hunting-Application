@@ -17,7 +17,7 @@
             <div class="nav-menu" id="navMenu">
                 <a href="index.html" class="nav-link">Home</a>
                 <a href="browse.html" class="nav-link active">Browse</a>
-                <a href="#features" class="nav-link">Features</a>
+                <!-- <a href="#features" class="nav-link">Features</a> -->
                 <a href="#help" class="nav-link">Help</a>
                 <div class="nav-auth">
                     <button class="btn-secondary" onclick="showAuthModal('login')"><a href="loginform.html">Sign In</a></button>
@@ -171,7 +171,34 @@
                 </div>
         </div>
     </section>
-    <script >
+    < <!-- Appointment Booking Modal -->
+    <div id="appointmentModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Book an Appointment</h3>
+            
+            <div class="selected-hostel" id="selectedHostelInfo">
+                <h4>Selected Property</h4>
+                <p id="selectedHostelName"></p>
+            </div>
+            
+            <form id="appointmentForm">
+                <input type="text" id="userName" name="userName" placeholder="Your Name" required>
+                <input type="email" id="userEmail" name="userEmail" placeholder="Your Email" required>
+                <input type="tel" id="userPhone" name="userPhone" placeholder="Your Phone Number" required>
+                <input type="text" id="appointmentCalendar" name="appointmentDate" placeholder="Select Date & Time" required>
+                <select id="appointmentType" name="appointmentType" required>
+                    <option value="">Select Appointment Type</option>
+                    <option value="viewing">Property Viewing</option>
+                    <option value="consultation">Consultation</option>
+                    <option value="contract">Contract Signing</option>
+                </select>
+                <textarea id="notes" name="notes" placeholder="Additional notes (optional)" rows="3"></textarea>
+                <button type="submit">Confirm Booking</button>
+            </form>
+        </div>
+    </div>
+    <script>
          window.addEventListener("DOMContentLoaded", () => {
             fetch("/api/hostels")
                 .then(res => res.json())
@@ -188,10 +215,17 @@
                         const card = document.createElement("div");
                         card.className = "property-card"; // You can style this in CSS
                         card.innerHTML = `
+                        <img src="${h.image}" alt="${h.title}">
+                        <div class="property-card-content"> 
                             <h3>${h.title}</h3>
                             <p><strong>Location:</strong> ${h.location}</p>
-                            <p><strong>Price:</strong> $${h.price}</p>
+                            <p><strong>Price:</strong> Ksh${h.price}</p>
                             <p>${h.features}</p>
+                            <div class="property-actions">
+                                <button class="btn-primary book-btn">Book Now</button>
+                                <button class="btn-secondary view-btn">View Details</button>
+                            </div>
+                        </div>             
                         `;
                         container.appendChild(card);
                     });
@@ -201,8 +235,128 @@
                     document.getElementById("propertiesGrid").innerHTML = "<p>Error loading hostels.</p>";
                 });
             });
-    </script>
+            let selectedHostel = null;
+            const modal = document.getElementById("appointmentModal");
+            const closeBtn = document.querySelector(".close");
+        
 
+        // Setup Flatpickr once
+        flatpickr("#appointmentCalendar", {
+                    enableTime: true,
+                    minDate: "today",
+                    dateFormat: "Y-m-d H:i",
+                    time_24hr: false,
+                    minuteIncrement: 30,
+                    defaultHour: 9,
+                    defaultMinute: 0,
+                    disable: [
+                        function(date) {
+                            // Disable Sundays (0 = Sunday)
+                            return date.getDay() === 0;
+                        }
+                    ],
+                    minTime: "08:00",
+                    maxTime: "18:00"
+                });
+
+ 
+
+  // Event delegation for dynamically created buttons
+  document.addEventListener("click", (e) => {
+            if (e.target.classList.contains("book-btn")) {
+                const propertyCard = e.target.closest(".property-card");
+                selectedHostel = {
+                    name: propertyCard.querySelector("h3").innerText,
+                    location: propertyCard.querySelector(".property-location").innerText,
+                    price: propertyCard.querySelector(".property-price p").innerText
+                };
+                
+                // Update modal with selected hostel info
+                document.getElementById("selectedHostelName").innerText = selectedHostel.name;
+                
+                // Show modal
+                modal.style.display = "flex";
+            }
+
+            // Close modal when clicking X or outside
+            if (e.target === closeBtn || e.target === modal) {
+                modal.style.display = "none";
+                resetForm();
+            }
+        });
+
+  // Handle appointment booking
+  document.getElementById("appointmentForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const date = document.getElementById("appointmentCalendar").value;
+
+    try {
+      const response = await simulateBookingAPI(appointmentData);
+                
+                if (response.success) {
+                    alert(`Appointment booked successfully! 
+                    
+Appointment Details:
+- Property: ${selectedHostel.name}
+- Date: ${appointmentData.appointmentDate}
+- Type: ${appointmentData.appointmentType}
+- Contact: ${appointmentData.userEmail}
+
+You will receive a confirmation email shortly.`);
+                    
+                    modal.style.display = "none";
+                    resetForm();
+                } else {
+                    alert("Error booking appointment. Please try again.");
+                }
+            } catch (err) {
+                alert("Error booking appointment. Please check your connection and try again.");
+                console.error("Booking error:", err);
+            }
+        });
+        // Simulate API call for booking
+        async function simulateBookingAPI(appointmentData) {    
+            // Simulate a delay for the API call
+            return new Promise((resolve) => settTimeout(resolve, 1000)); 
+            const bookings = JSON.parse(localStorage.getItem('hostelBookings') || '[]');
+            bookings.push({
+                id: Date.now(),
+                ...appointmentData
+            });
+            localStorage.setItem('hostelBookings', JSON.stringify(bookings));
+            
+            console.log("Booking saved:", appointmentData);
+            
+            return { success: true, message: "Appointment booked successfully!" };
+        }
+        // Reset form fields
+        function resetForm() {
+            document.getElementById("appointmentForm").reset();
+            selectedHostel = null;  
+            document.getElementById("selectedHostelName").innerText = "";
+        }
+        
+  
+                    //  data.forEach(h => {
+                    //     const card = document.createElement("div");
+                    //     card.className = "property-card"; // You can style this in CSS
+                    //     card.innerHTML = `
+                    //     <img src="${h.image}" alt="${h.title}">
+                    //     <div class="property-card-content"> 
+                    //         <h3>${h.title}</h3>
+                    //         <p><strong>Location:</strong> ${h.location}</p>
+                    //         <p><strong>Price:</strong> Ksh${h.price}</p>
+                    //         <p>${h.features}</p>
+                    //         <div class="property-actions">
+                    //             <button class="btn-primary book-btn">Book Now</button>
+                    //             <button class="btn-secondary view-btn">View Details</button>
+                    //         </div>
+                    //     </div>             
+                    //     `;
+                    //     container.appendChild(card);
+                    // });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <footer class="footer">
       <div class="container">
           <div class="footer-grid">

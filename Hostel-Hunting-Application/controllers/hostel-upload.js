@@ -1,13 +1,6 @@
-const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const mysql = require('mysql2/promise');
-
-const app = express();
-const port = 3000;
-
-// Middleware to parse JSON bodies
-app.use(express.json());
 
 // MySQL database connection configuration
 const dbConfig = {
@@ -19,26 +12,6 @@ const dbConfig = {
 
 // Create MySQL connection pool
 const pool = mysql.createPool(dbConfig);
-
-// Initialize database and create hostels table
-async function initializeDatabase() {
-  try {
-    const connection = await pool.getConnection();
-    await connection.query(`
-      CREATE TABLE IF NOT EXISTS hostels (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
-        location VARCHAR(255) NOT NULL,
-        description TEXT NOT NULL,
-        imagePath VARCHAR(255) NOT NULL
-      )
-    `);
-    console.log('Hostels table ready');
-    connection.release();
-  } catch (error) {
-    console.error('Error initializing database:', error);
-  }
-}
 
 // Set up storage for uploaded files
 const storage = multer.diskStorage({
@@ -62,8 +35,8 @@ const upload = multer({
   }
 });
 
-// POST endpoint to upload hostel details
-app.post('/api/hostels', upload.single('image'), async (req, res) => {
+// Controller function to add a hostel
+exports.addHostel = async (req, res) => {
   const { name, location, description } = req.body;
   const image = req.file ? req.file.path : null;
 
@@ -83,10 +56,10 @@ app.post('/api/hostels', upload.single('image'), async (req, res) => {
     console.error('Error saving hostel:', error);
     res.status(500).json({ error: 'Failed to save hostel' });
   }
-});
+};
 
-// GET endpoint to retrieve all hostels
-app.get('/api/hostels', async (req, res) => {
+// Controller function to get all hostels
+exports.getAllHostels = async (req, res) => {
   try {
     const [rows] = await pool.query('SELECT * FROM hostels');
     res.json(rows);
@@ -94,11 +67,7 @@ app.get('/api/hostels', async (req, res) => {
     console.error('Error fetching hostels:', error);
     res.status(500).json({ error: 'Failed to fetch hostels' });
   }
-});
+};
 
-// Initialize database and start the server
-initializeDatabase().then(() => {
-  app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-  });
-});
+// Export the upload middleware for use in the router
+exports.upload = upload;

@@ -673,24 +673,24 @@ function logout() {
     showNotification('You have been signed out', 'success');
 }
 
-function updateAuthUI() {
-    const navAuth = document.querySelector('.nav-auth');
+// function updateAuthUI() {
+//     const navAuth = document.querySelector('.nav-auth');
     
-    if (currentUser) {
-        navAuth.innerHTML = `
-            <span style="color: var(--dark-color); margin-right: 1rem;">
-                <i class="fas fa-user"></i>
-                ${currentUser.name}
-            </span>
-            <button class="btn-outline" onclick="logout()">Sign Out</button>
-        `;
-    } else {
-        navAuth.innerHTML = `
-            <button class="btn-secondary" onclick="showAuthModal('login')">Sign In</button>
-            <button class="btn-primary" onclick="showAuthModal('register')">Sign Up</button>
-        `;
-    }
-}
+//     if (currentUser) {
+//         navAuth.innerHTML = `
+//             <span style="color: var(--dark-color); margin-right: 1rem;">
+//                 <i class="fas fa-user"></i>
+//                 ${currentUser.name}
+//             </span>
+//             <button class="btn-outline" onclick="logout()">Sign Out</button>
+//         `;
+//     } else {
+//         navAuth.innerHTML = `
+//             <button class="btn-secondary" onclick="showAuthModal('login')">Sign In</button>
+//             <button class="btn-primary" onclick="showAuthModal('register')">Sign Up</button>
+//         `;
+//     }
+// }
 
 // Session management
 function saveUserSession() {

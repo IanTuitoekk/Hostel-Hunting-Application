@@ -423,7 +423,7 @@
         </div>
     </div>
 
-    <!-- <script src="script.js"></script> -->
+    <script src="script.js"></script>
 </body>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -433,8 +433,14 @@
           const container = document.getElementById('authButtons');
           if (data.username) {
               container.innerHTML = `<span>Welcome, <strong>${data.username}</strong></span>
-                                      <a href="/logout" class="btn-secondary">Logout</a> 
+                                      <button class="btn-secondary" id= "logoutBtn">Logout</button> 
               `;
+                document.getElementById("logoutBtn").addEventListener("click", () => {
+                    fetch("/logout")
+                        .then(() => {
+                            window.location.href = "/";
+                        });
+                });
           } else {
               container.innerHTML = `
                 <button class="btn-secondary"><a href="loginform.html">Sign In</a></button>
@@ -460,10 +466,13 @@
                 const card = document.createElement("div");
                 card.className = "property-card"; // You can style this in CSS
                 card.innerHTML = `
+                    <img src="${h.image}" alt="${h.title}" class="property-image">
                     <h3>${h.title}</h3>
                     <p><strong>Location:</strong> ${h.location}</p>
                     <p><strong>Price:</strong> $${h.price}</p>
                     <p>${h.features}</p>
+                    <button class="btn-primary" onclick="viewPropertyDetails('${h.id}')">View Details</button>
+                    <button class="btn-secondary" onclick="bookProperty('${h.id}')">Book Now</button>
                 `;
                 container.appendChild(card);
             });

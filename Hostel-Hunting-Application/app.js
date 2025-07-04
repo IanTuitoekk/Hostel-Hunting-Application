@@ -18,10 +18,10 @@ const db = mysql.createConnection({
 });
 module.exports = db;
 
-// app.use(express.json());
-app.use(express.static("Frontendc:\Users\alvin\Downloads\hostelfinder.sql"));
+app.use(express.json());
+app.use(express.static("Frontend"));
 
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 db.connect((err) => {
@@ -43,16 +43,16 @@ const pagesRouter = require("./routes/pages");
 app.use("/", pagesRouter);
 const authRouter = require("./routes/auth");
 app.use("/auth", authRouter);
-const adminRouter = require("./routes/admin");
-app.use("/admin", adminRouter);
+// const adminRouter = require("./routes/admin");
+// app.use("/admin", adminRouter);
 const apiRouter = require("./routes/api");
 app.use("/api", apiRouter);
 const searchRouter = require("./routes/search");
 app.use("/search", searchRouter);   
 const bookingRouter = require("./models/booking");
 app.use("/bookings", bookingRouter);
-
-
+// const hostelUploadRouter = require("./routes/hostelRouter");
+// app.use("/upload", hostelUploadRouter);
 
 app.listen(5001,() => {
     console.log("Server started on Port 5001");
